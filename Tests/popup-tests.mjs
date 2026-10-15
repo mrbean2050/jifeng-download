@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const elements=new Map();const element=id=>{if(!elements.has(id))elements.set(id,{textContent:'',checked:false,value:''});return elements.get(id);};
+let allowed=true;const requested=[],registered=[],injected=[];
+const chrome={runtime:{getManifest:()=>({version:'1.1.2'}),sendMessage:async()=>({ok:true,version:'1.1.2'})},storage:{local:{get:async()=>({}),set:async()=>{}}},permissions:{contains:async()=>false,request:async p=>{requested.push(p.origins);return allowed;}},tabs:{query:async q=>q.active?[{id:1,url:'https://www.vjshi.com/watch/123.html'}]:[{id:1},{id:2}]},scripting:{getRegisteredContentScripts:async()=>[],registerContentScripts:async list=>registered.push(...list),executeScript:async p=>injected.push(p)}};
+vm.runInNewContext(fs.readFileSync(new URL('../Extension/popup.js',import.meta.url),'utf8'),{chrome,URL,TextEncoder,document:{getElementById:element}});
+await element('enable-all-video').onclick();assert.deepEqual(Array.from(requested.at(-1)),['http://*/*','https://*/*']);assert.equal(registered.at(-1).id,'video-all-sites');assert.ok(injected.at(-1).target.allFrames);assert.match(element('site').textContent,/所有/);
+const count=registered.length;allowed=false;await element('enable-all-video').onclick();assert.equal(registered.length,count);assert.match(element('status').textContent,/未获准/);
+assert.ok(!fs.readFileSync(new URL('../Extension/popup.html',import.meta.url),'utf8').includes('id="enable-video"'));
+console.log('PASS all-site grants, removed per-site control, all-frame injection and denied permission handling');

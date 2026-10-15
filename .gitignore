@@ -1,0 +1,9 @@
+Runtime/
+build/
+.cache/
+.DS_Store
+xcuserdata/
+*.xcuserstate
+*.pem
+*.p12
+*.mobileprovision

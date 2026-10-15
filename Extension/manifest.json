@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "疾风下载 · 浏览器助手",
+  "version": "1.2.0",
+  "description": "在获准的网站视频旁显示疾风下载按钮，一键交给 Apple Silicon 原生 App。按网站授权，不读取 Cookie。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA40s16bNPfm/UbWTbwIEwyZJNTK0vXZGvDzZWgAs+DLBC4zIqr13Q6ttCUENtLQwxBcXZCgwOgUgP0PgrmjgTy34Mea1zxrDRew6Bn2e6ihHARlLTPd7unx4bMoXUoYYbMCv40G7L4SIeEJc1Q+LE8Zo2T9Xnv8k3Ee+uUENQEgkFSFeKM3L9eFPvjBLNjuEQZ3SyW7w51oI87BkFT+ohb4xBULWWGbiJaGp0/QPzigHMX/cF9fNSOiF4O9ZJqhZo7jEXthwi3leAZF0NhAoaMp1Kj0FzC6Nt+MuLD7fQAIRKG1Dj7bGvDwGm2ni5rkqYdKRLMpAKhCjxg1puPHFdpwIDAQAB",
+  "permissions": [
+    "nativeMessaging",
+    "downloads",
+    "contextMenus",
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "疾风下载",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png",
+    "256": "icons/256.png"
+  }
+}

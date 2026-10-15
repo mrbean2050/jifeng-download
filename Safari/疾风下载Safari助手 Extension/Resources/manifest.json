@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "疾风下载 · 浏览器助手",
+  "version": "1.2.0",
+  "description": "在获准的网站视频旁显示疾风下载按钮，一键交给 Apple Silicon 原生 App。按网站授权，不读取 Cookie。",
+  "permissions": [
+    "nativeMessaging",
+    "contextMenus",
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "疾风下载",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "video-source.js",
+        "video.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png",
+    "256": "icons/256.png"
+  }
+}
