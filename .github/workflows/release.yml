@@ -39,7 +39,9 @@ jobs:
           ditto dist/疾风下载.app stage/疾风下载.app
           ln -s /Applications stage/Applications
           cp README.md stage/使用说明.md
-          hdiutil create -volname '疾风下载 1.3.0 测试版' -srcfolder stage -format UDZO dist/JifengDownload-1.3.0-AppleSilicon.dmg
+          test -d "$PWD/stage/疾风下载.app"
+          mkdir -p "$PWD/dist"
+          hdiutil create -ov -fs HFS+ -volname '疾风下载 1.3.0 测试版' -srcfolder "$PWD/stage" -format UDZO "$PWD/dist/JifengDownload-1.3.0-AppleSilicon.dmg"
           hdiutil verify dist/JifengDownload-1.3.0-AppleSilicon.dmg
           cp .cache/ffmpeg-8.0.1.tar.xz scripts/build-ffmpeg.sh third-party-sources/
           cp -R ThirdParty third-party-sources/Notices
