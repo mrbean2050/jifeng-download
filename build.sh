@@ -27,7 +27,8 @@ if [ -d Runtime ]; then
   for tool in "$APP/Contents/Resources/Tools/"*; do codesign --force --sign - "$tool"; done
 fi
 if [ -d "$APP/Contents/PlugIns" ]; then
-  codesign --force --sign - "$APP/Contents/PlugIns/疾风下载 Safari.appex"
+  codesign --force --sign - --preserve-metadata=entitlements "$APP/Contents/PlugIns/疾风下载 Safari.appex"
+  codesign -d --entitlements - --xml "$APP/Contents/PlugIns/疾风下载 Safari.appex" | /usr/bin/python3 -c 'import plistlib,sys; d=plistlib.load(sys.stdin.buffer); assert d.get("com.apple.security.app-sandbox") and d.get("com.apple.security.network.client"), "Safari entitlements missing"'
 fi
 cp -R ThirdParty "$APP/Contents/Resources/ThirdParty"
 codesign --force --sign - "$APP"
